@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+import uuid
 
 # Coping Mechanisms List (for panic attacks)
 COPING_MECHANISMS = [
@@ -76,14 +77,14 @@ class PanicPal:
             for resource in resources:
                 if resource.link:
                     if resource.link == "calm_breathing":
-                        st.write(f"- [{resource.name}](/?page=calm_breathing): {resource.description}")
+                        st.write(f"- [{resource.name}](?page=calm_breathing): {resource.description}")
                     else:
                         st.write(f"- [{resource.name}]({resource.link}): {resource.description}")
                 else:
                     st.write(f"- {resource.name}: {resource.description}")
 
         # Handle resource pages
-        page = st.query_params.get("page", [None])[0]
+        page = st.experimental_get_query_params().get("page", [None])[0]
         if page == "calm_breathing":
             self.show_calm_breathing_page()
 
