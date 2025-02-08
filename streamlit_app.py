@@ -20,7 +20,7 @@ def get_random_coping_mechanism():
 class SupportService:
     def __init__(self):
         self.resources = {
-            "resource1": Resource("resource2", "National Suicide Prevention Lifeline", "Call or text 988", "Hotlines")
+            "resource1": Resource("resource1", "National Suicide Prevention Lifeline", "Call or text 988", "Hotlines")
         }
 
     def add_resource(self, name, description, category):
@@ -49,6 +49,21 @@ class PanicPal:
         self.chat_history = []
 
     def run(self):
+        # Add custom CSS for background image
+        st.markdown(
+            """
+            <style>
+            .stApp {
+                background-image: url("wallpaperflare.com_wallpaper.jpg");
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
         st.title("PanicPal")
         st.write("Your Personal Anxiety Support App")
         
@@ -80,4 +95,4 @@ if __name__ == "__main__":
     support_app = SupportService()
 
     ui = PanicPal(support_app)
-    ui.run() 
+    ui.run()
