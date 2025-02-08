@@ -6,7 +6,7 @@ import base64
 import openai
 
 # Set your OpenAI API key
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("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")
 
 # Coping Mechanisms List (for panic attacks)
 COPING_MECHANISMS = [
