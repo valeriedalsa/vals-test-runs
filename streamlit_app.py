@@ -1,6 +1,7 @@
 import streamlit as st
 import random
 import uuid
+import os
 
 # Coping Mechanisms List (for panic attacks)
 COPING_MECHANISMS = [
@@ -49,23 +50,30 @@ class PanicPal:
         self.chat_history = []
 
     def run(self):
-        # Add custom CSS for background image
-        st.markdown(
-            """
-            <style>
-            .stApp {
-                background-image: url("wallpaperflare.com_wallpaper.jpg");
-                background-size: cover;
-                background-position: center;
-                background-attachment: fixed;
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
-
         st.title("PanicPal")
         st.write("Your Personal Anxiety Support App")
+
+        # Upload image
+        uploaded_file = st.file_uploader("wallpaperflare.com_wallpaper.jpg", type=["jpg"])
+        if uploaded_file is not None:
+            # Save the uploaded file to disk
+            with open(os.path.join("background.jpg"), "wb") as f:
+                f.write(uploaded_file.getbuffer())
+
+            # Add custom CSS for background image
+            st.markdown(
+                """
+                <style>
+                .stApp {
+                    background-image: url("background.jpg");
+                    background-size: cover;
+                    background-position: center;
+                    background-attachment: fixed;
+                }
+                </style>
+                """,
+                unsafe_allow_html=True
+            )
         
         col1, col2 = st.columns(2)
 
