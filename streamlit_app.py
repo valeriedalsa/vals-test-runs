@@ -20,13 +20,13 @@ def get_random_coping_mechanism():
 class SupportService:
     def __init__(self):
         self.resources = {
-            "resource1": Resource("resource1", "Calm Breathing Exercise", "A guided breathing exercise...", "Coping Strategies", "calm_breathing"),
+            "resource1": Resource("resource1", "Calm Breathing Exercise", "A guided breathing exercise...", "Coping Strategies"),
             "resource2": Resource("resource2", "National Suicide Prevention Lifeline", "Call or text 988", "Hotlines")
         }
 
-    def add_resource(self, name, description, category, link=None):
+    def add_resource(self, name, description, category):
         resource_id = str(uuid.uuid4())
-        new_resource = Resource(resource_id, name, description, category, link)
+        new_resource = Resource(resource_id, name, description, category)
         self.resources[resource_id] = new_resource
 
     def get_resources_by_category(self, category):
@@ -37,12 +37,11 @@ class SupportService:
 
 # Define Resource class
 class Resource:
-    def __init__(self, resource_id, name, description, category, link=None):
+    def __init__(self, resource_id, name, description, category):
         self.resource_id = resource_id
         self.name = name
         self.description = description
         self.category = category
-        self.link = link
 
 # Define the UI class
 class PanicPal:
@@ -69,27 +68,18 @@ class PanicPal:
             if st.button("Get a Random Coping Mechanism"):
                 st.write(get_random_coping_mechanism())
 
+        st.subheader("Calming Breathing Exercises")
+        self.show_calm_breathing_exercises()
+
         st.subheader("Available Resources")
         categories = ["Coping Strategies", "Hotlines"]
         for category in categories:
             resources = self.support_service.get_resources_by_category(category)
             st.write(f"### {category}")
             for resource in resources:
-                if resource.link:
-                    if resource.link == "calm_breathing":
-                        st.write(f"- [{resource.name}](?page=calm_breathing): {resource.description}")
-                    else:
-                        st.write(f"- [{resource.name}]({resource.link}): {resource.description}")
-                else:
-                    st.write(f"- {resource.name}: {resource.description}")
+                st.write(f"- {resource.name}: {resource.description}")
 
-        # Handle resource pages
-        page = st.query_params.get("page", [None])[0]
-        if page == "calm_breathing":
-            self.show_calm_breathing_page()
-
-    def show_calm_breathing_page(self):
-        st.title("Calm Breathing Exercise")
+    def show_calm_breathing_exercises(self):
         st.write("""
         ### Diaphragmatic Breathing
         Place one hand on your chest and the other on your abdomen. Inhale slowly through your nose, feeling your abdomen rise. Exhale slowly through your mouth, allowing your abdomen to fall. This technique promotes relaxation and helps counteract hyperventilation.
