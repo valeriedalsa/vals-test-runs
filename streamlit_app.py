@@ -84,11 +84,6 @@ class PanicPal:
             if st.button("Get a Random Coping Mechanism"):
                 st.write(get_random_coping_mechanism())
 
-        st.subheader("Generate AI Haiku")
-        if st.button("Generate Haiku"):
-            haiku = generate_haiku()
-            st.write(haiku)
-
         st.subheader("Available Resources")
         categories = ["Hotlines"]
         for category in categories:
