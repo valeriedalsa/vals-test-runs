@@ -20,8 +20,7 @@ class SupportService:
     def __init__(self):
         self.resources = {
             "resource1": Resource("resource1", "Calm Breathing Exercise", "A guided breathing exercise...", "Coping Strategies", "calm_breathing"),
-            "resource2": Resource("resource2", "National Suicide Prevention Lifeline", "Call or text 988", "Hotlines"),
-            "resource3": Resource("resource3", "Find a Therapist", "Directory of therapists", "Therapists", "therapist_link")
+            "resource2": Resource("resource2", "National Suicide Prevention Lifeline", "Call or text 988", "Hotlines")
         }
 
     def add_resource(self, name, description, category, link=None):
@@ -70,7 +69,7 @@ class PanicPal:
                 st.write(get_random_coping_mechanism())
 
         st.subheader("Available Resources")
-        categories = ["Coping Strategies", "Hotlines", "Therapists"]
+        categories = ["Coping Strategies", "Hotlines"]
         for category in categories:
             resources = self.support_service.get_resources_by_category(category)
             st.write(f"### {category}")
