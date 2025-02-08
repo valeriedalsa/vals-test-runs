@@ -50,7 +50,7 @@ class PanicPal:
 
     def run(self):
         st.title("PanicPal")
-        st.write("Your Anxiety Support App")
+        st.write("Your Personal Anxiety Support App")
         
         col1, col2 = st.columns(2)
 
