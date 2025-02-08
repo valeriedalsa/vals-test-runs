@@ -84,7 +84,7 @@ class PanicPal:
                     st.write(f"- {resource.name}: {resource.description}")
 
         # Handle resource pages
-        page = st.experimental_get_query_params().get("page", [None])[0]
+        page = st.query_params.get("page", [None])[0]
         if page == "calm_breathing":
             self.show_calm_breathing_page()
 
