@@ -1,6 +1,10 @@
 import streamlit as st
 import random
 import uuid
+import openai
+
+# Set your OpenAI API key
+openai.api_key = "YOUR_OPENAI_API_KEY"
 
 # Coping Mechanisms List (for panic attacks)
 COPING_MECHANISMS = [
@@ -20,7 +24,7 @@ def get_random_coping_mechanism():
 class SupportService:
     def __init__(self):
         self.resources = {
-            "resource1": Resource("resource2", "National Suicide Prevention Lifeline", "Call or text 988", "Hotlines")
+            "resource1": Resource("resource1", "National Suicide Prevention Lifeline", "Call or text 988", "Hotlines")
         }
 
     def add_resource(self, name, description, category):
@@ -46,7 +50,8 @@ class Resource:
 class PanicPal:
     def __init__(self, support_service):
         self.support_service = support_service
-        self.chat_history = []
+        if "messages" not in st.session_state:
+            st.session_state["messages"] = [{"role": "assistant", "content": "Hello! How can I help you today?"}]
 
     def run(self):
         st.title("PanicPal - Anxiety Support App")
@@ -55,12 +60,17 @@ class PanicPal:
 
         with col1:
             st.subheader("Chat Box")
-            user_input = st.text_input("What do you need help with today?")
-            if st.button("Send"):
-                self.chat_history.append(f"You: {user_input}")
-                self.chat_history.append(f"Bot: I'm here to help you with your anxiety. How can I assist?")
-            for message in self.chat_history:
-                st.write(message)
+            for message in st.session_state["messages"]:
+                st.chat_message(message["role"], message["content"])
+
+            user_input = st.chat_input("Enter your message:")
+            if user_input:
+                st.session_state["messages"].append({"role": "user", "content": user_input})
+                response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=st.session_state["messages"]
+                )
+                st.session_state["messages"].append({"role": "assistant", "content": response.choices[0].message["content"]})
 
         with col2:
             st.subheader("Random Coping Mechanism Generator")
@@ -79,4 +89,4 @@ if __name__ == "__main__":
     support_app = SupportService()
 
     ui = PanicPal(support_app)
-    ui.run() 
+    ui.run()
