@@ -68,7 +68,7 @@ class PanicPal:
                 st.write(get_random_coping_mechanism())
 
         st.subheader("Available Resources")
-        categories = ["Coping Strategies", "Hotlines"]
+        categories = ["Hotlines"]
         for category in categories:
             resources = self.support_service.get_resources_by_category(category)
             st.write(f"### {category}")
