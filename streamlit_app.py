@@ -3,6 +3,10 @@ import random
 import uuid
 import os
 import base64
+import openai
+
+# Set your OpenAI API key
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Coping Mechanisms List (for panic attacks)
 COPING_MECHANISMS = [
@@ -17,6 +21,16 @@ COPING_MECHANISMS = [
 # Function to select a random coping mechanism
 def get_random_coping_mechanism():
     return random.choice(COPING_MECHANISMS)
+
+# Function to generate a haiku about AI using OpenAI
+def generate_haiku():
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {"role": "user", "content": "write a haiku about ai"}
+        ]
+    )
+    return response.choices[0].message['content']
 
 # SupportService Class (simplified for this example)
 class SupportService:
@@ -69,6 +83,11 @@ class PanicPal:
             st.subheader("Random Coping Mechanism Generator")
             if st.button("Get a Random Coping Mechanism"):
                 st.write(get_random_coping_mechanism())
+
+        st.subheader("Generate AI Haiku")
+        if st.button("Generate Haiku"):
+            haiku = generate_haiku()
+            st.write(haiku)
 
         st.subheader("Available Resources")
         categories = ["Hotlines"]
