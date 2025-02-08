@@ -20,7 +20,7 @@ def get_random_coping_mechanism():
 class SupportService:
     def __init__(self):
         self.resources = {
-            "resource1": Resource("resource2", "National Suicide Prevention Lifeline", "Call or text 988", "Hotlines")
+            "resource1": Resource("resource1", "National Suicide Prevention Lifeline", "Call or text 988", "Hotlines")
         }
 
     def add_resource(self, name, description, category):
@@ -79,4 +79,4 @@ if __name__ == "__main__":
     support_app = SupportService()
 
     ui = PanicPal(support_app)
-    ui.run() 
+    ui.run()
