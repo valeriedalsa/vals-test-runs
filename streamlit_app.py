@@ -3,6 +3,13 @@ import random
 import uuid
 import os
 import base64
+import openai
+
+st.title("Panic Pal Bot")
+let OPENAI_API_KEY = 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
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+if "openai_model" not in st.session_state:
+    st.session.state["openai_model"] = "gpt-3.5-turbo"
 
 # Coping Mechanisms List (for panic attacks)
 COPING_MECHANISMS = [
