@@ -108,7 +108,49 @@ class Resource:
         self.category = category
         self.link = link
 
-# Now you can create your UI class and app (unchanged)
+# Define the UI class
+class PanicPal:
+    def __init__(self, support_service):
+        self.support_service = support_service
+
+    def run(self):
+        st.title("PanicPal - Anxiety Support App")
+        
+        # User registration and login
+        st.subheader("User Registration")
+        name = st.text_input("Name")
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+        if st.button("Register"):
+            self.support_service.register_user(name, email, password)
+            st.success("User registered successfully")
+
+        st.subheader("User Login")
+        login_email = st.text_input("Login Email")
+        login_password = st.text_input("Login Password", type="password")
+        if st.button("Login"):
+            user = self.support_service.authenticate_user(login_email, login_password)
+            if user:
+                st.success(f"Welcome, {user.name}")
+                self.display_user_dashboard(user)
+            else:
+                st.error("Invalid email or password")
+
+    def display_user_dashboard(self, user):
+        st.subheader("User Dashboard")
+        if st.button("Get a Random Coping Mechanism"):
+            st.write(get_random_coping_mechanism())
+
+        st.subheader("Available Resources")
+        categories = ["Coping Strategies", "Hotlines", "Therapists"]
+        for category in categories:
+            resources = self.support_service.get_resources_by_category(category)
+            st.write(f"### {category}")
+            for resource in resources:
+                if resource.link:
+                    st.write(f"- [{resource.name}]({resource.link}): {resource.description}")
+                else:
+                    st.write(f"- {resource.name}: {resource.description}")
 
 if __name__ == "__main__":
     support_app = SupportService()
@@ -117,5 +159,5 @@ if __name__ == "__main__":
     support_app.register_user("Test User", "test@example.com", "password")
     support_app.register_user("Another User", "another@example.com", "another_password")
 
-    ui = MentalHealthAppUI(support_app)
+    ui = PanicPal(support_app)
     ui.run()
