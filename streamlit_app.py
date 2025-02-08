@@ -58,7 +58,7 @@ class PanicPal:
 
         with col1:
             st.subheader("Chat Box")
-            user_input = st.text_input("What do you need help with today?")
+            user_input = st.text_input("I'm here to help you with your anxiety. How can I assist?")
             if st.button("Send"):
                 self.chat_history.append(f"You: {user_input}")
                 self.chat_history.append(f"Bot: I'm here to help you with your anxiety. How can I assist?")
