@@ -54,30 +54,6 @@ class PanicPal:
         st.title("PanicPal")
         st.write("Your Personal Anxiety Support App")
 
-        # Check if the background image file exists
-        image_path = "wallpaperflare.com_wallpaper.jpg"
-        if os.path.exists(image_path):
-            # Read the image file and encode it to base64
-            with open(image_path, "rb") as image_file:
-                encoded_string = base64.b64encode(image_file.read()).decode()
-
-            # Add custom CSS for background image
-            st.markdown(
-                f"""
-                <style>
-                .stApp {{
-                    background-image: url("data:image/jpeg;base64,{encoded_string}");
-                    background-size: cover;
-                    background-position: center;
-                    background-attachment: fixed;
-                }}
-                </style>
-                """,
-                unsafe_allow_html=True
-            )
-        else:
-            st.error(f"Background image file '{image_path}' not found. Please make sure the file is in the same directory as this script.")
-
         col1, col2 = st.columns(2)
 
         with col1:
