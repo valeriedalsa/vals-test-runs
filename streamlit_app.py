@@ -1,7 +1,6 @@
 import streamlit as st
 import random
 import uuid
-c:\>pip install streamlit --upgrade
 
 # Coping Mechanisms List (for panic attacks)
 COPING_MECHANISMS = [
