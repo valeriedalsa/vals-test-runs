@@ -1,7 +1,6 @@
 import streamlit as st
 import random
 import uuid
-import base64
 
 # Coping Mechanisms List (for panic attacks)
 COPING_MECHANISMS = [
@@ -50,25 +49,6 @@ class PanicPal:
         self.chat_history = []
 
     def run(self):
-        # Read the image file and encode it to base64
-        with open("wallpaperflare.com_wallpaper.jpg", "rb") as image_file:
-            encoded_string = base64.b64encode(image_file.read()).decode()
-
-        # Add custom CSS for background image
-        st.markdown(
-            f"""
-            <style>
-            .stApp {{
-                background-image: url("data:image/jpeg;base64,{encoded_string}");
-                background-size: cover;
-                background-position: center;
-                background-attachment: fixed;
-            }}
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
-
         st.title("PanicPal")
         st.write("Your Personal Anxiety Support App")
         
