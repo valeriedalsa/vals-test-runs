@@ -49,7 +49,8 @@ class PanicPal:
         self.chat_history = []
 
     def run(self):
-        st.title("PanicPal - Anxiety Support App")
+        st.title("PanicPal")
+        st.subheader("Anxiety Support App")
         
         col1, col2 = st.columns(2)
 
