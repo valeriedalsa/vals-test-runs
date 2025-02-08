@@ -19,7 +19,7 @@ def get_random_coping_mechanism():
 class SupportService:
     def __init__(self):
         self.resources = {
-            "resource1": Resource("resource1", "Calm Breathing Exercise", "A guided breathing exercise...", "Coping Strategies", "some_link"),
+            "resource1": Resource("resource1", "Calm Breathing Exercise", "A guided breathing exercise...", "Coping Strategies", "calm_breathing"),
             "resource2": Resource("resource2", "National Suicide Prevention Lifeline", "Call or text 988", "Hotlines"),
             "resource3": Resource("resource3", "Find a Therapist", "Directory of therapists", "Therapists", "therapist_link")
         }
@@ -48,6 +48,7 @@ class Resource:
 class PanicPal:
     def __init__(self, support_service):
         self.support_service = support_service
+        self.chat_history = []
 
     def run(self):
         st.title("PanicPal - Anxiety Support App")
@@ -57,8 +58,11 @@ class PanicPal:
         with col1:
             st.subheader("Chat Box")
             user_input = st.text_input("What do you need help with today?")
-            if user_input:
-                st.write(f"You said: {user_input}")
+            if st.button("Send"):
+                self.chat_history.append(f"You: {user_input}")
+                self.chat_history.append(f"Bot: I'm here to help you with your anxiety. How can I assist?")
+            for message in self.chat_history:
+                st.write(message)
 
         with col2:
             st.subheader("Random Coping Mechanism Generator")
@@ -72,9 +76,39 @@ class PanicPal:
             st.write(f"### {category}")
             for resource in resources:
                 if resource.link:
-                    st.write(f"- [{resource.name}]({resource.link}): {resource.description}")
+                    if resource.link == "calm_breathing":
+                        st.write(f"- [{resource.name}](/?page=calm_breathing): {resource.description}")
+                    else:
+                        st.write(f"- [{resource.name}]({resource.link}): {resource.description}")
                 else:
                     st.write(f"- {resource.name}: {resource.description}")
+
+        # Handle resource pages
+        page = st.experimental_get_query_params().get("page", [None])[0]
+        if page == "calm_breathing":
+            self.show_calm_breathing_page()
+
+    def show_calm_breathing_page(self):
+        st.title("Calm Breathing Exercise")
+        st.write("""
+        ### Diaphragmatic Breathing
+        Place one hand on your chest and the other on your abdomen. Inhale slowly through your nose, feeling your abdomen rise. Exhale slowly through your mouth, allowing your abdomen to fall. This technique promotes relaxation and helps counteract hyperventilation.
+
+        ### Box Breathing
+        Visualize a square and follow this pattern: Inhale for 4 counts, hold for 4 counts, exhale for 4 counts, and hold for 4 counts. Repeat several times. This structured technique can bring immediate relief during a panic attack.
+
+        ### 4-7-8 Breathing
+        Inhale silently through your nose for 4 counts, hold your breath for 7 counts, then exhale completely through your mouth for 8 counts, making a whooshing sound. Repeat at least four times.
+
+        ### Alternate Nostril Breathing
+        Use your right thumb to block your right nostril, inhale through the left nostril, then block the left nostril with your ring finger and exhale through the right nostril. Alternate nostrils with each breath cycle.
+
+        ### 4-4-4 Breathing (Box Breathing)
+        Take a breath, exhale for 4 counts, hold for 4 counts, inhale for 4 counts, and hold again for 4 counts. This technique can help keep a raised heart rate down and distract you from anxiety-inducing situations.
+
+        ### Long Exhaling
+        Inhale for 2-3 seconds, pause briefly, then exhale gently for 4-6 seconds (double the inhale time). Continue for at least 5 minutes. This technique can help combat the fight-or-flight stress response.
+        """)
 
 if __name__ == "__main__":
     support_app = SupportService()
