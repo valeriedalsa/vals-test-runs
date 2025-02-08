@@ -76,7 +76,7 @@ class PanicPal:
                 unsafe_allow_html=True
             )
         else:
-            st.error(f"Background image file '{image_path}' not found.")
+            st.error(f"Background image file '{image_path}' not found. Please make sure the file is in the same directory as this script.")
 
         col1, col2 = st.columns(2)
 
